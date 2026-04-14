@@ -1,1 +1,665 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tangram – AI Automatizace pro váš podnik</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --black: #0e0e0e;
+    --white: #f5f3ee;
+    --accent: #c8ff00;
+    --accent-dark: #9bcc00;
+    --gray: #888;
+    --border: rgba(255,255,255,0.08);
+    --card-bg: #161616;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(14,14,14,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--black);
+    background: var(--accent);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 10rem 2.5rem 6rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block; width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(245,243,238,0.6);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 500;
+    color: var(--black);
+    background: var(--accent);
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 400;
+    color: rgba(245,243,238,0.5);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(245,243,238,0.2);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--white); border-color: var(--white); }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%; height: 1px;
+    background: var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* SECTION */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 2.5rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  h2 em { font-style: normal; color: var(--accent); }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 3.5rem;
+  }
+
+  .service-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+  .service-card:hover { background: #1c1c1c; }
+
+  .service-icon {
+    width: 40px; height: 40px;
+    background: rgba(200,255,0,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 18px;
+  }
+
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .service-card p {
+    font-size: 0.875rem;
+    color: rgba(245,243,238,0.5);
+    line-height: 1.6;
+  }
+
+  /* PROOF */
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  @media (max-width: 680px) { .proof-grid { grid-template-columns: 1fr; } }
+
+  .proof-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .proof-card.featured {
+    border-color: rgba(200,255,0,0.3);
+    grid-column: 1 / -1;
+  }
+
+  .proof-label {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .proof-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .proof-card p {
+    font-size: 0.9rem;
+    color: rgba(245,243,238,0.55);
+    line-height: 1.7;
+  }
+
+  .proof-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 1rem;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,255,0,0.3);
+    padding-bottom: 1px;
+  }
+
+  /* TESTIMONIAL */
+  .testimonial-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+
+  .testimonial-block::before {
+    content: '"';
+    position: absolute;
+    top: 1rem; left: 2rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 6rem;
+    line-height: 1;
+    color: rgba(200,255,0,0.1);
+    pointer-events: none;
+  }
+
+  .testimonial-text {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,243,238,0.8);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-placeholder {
+    font-size: 0.875rem;
+    color: var(--gray);
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .author-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(200,255,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem; font-weight: 700;
+    color: var(--accent);
+  }
+
+  .author-name {
+    font-size: 0.9rem; font-weight: 500;
+  }
+
+  .author-role {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+
+  /* STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 3.5rem;
+  }
+
+  .stat-item {
+    background: var(--card-bg);
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem; font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-desc {
+    font-size: 0.8rem;
+    color: rgba(245,243,238,0.45);
+    line-height: 1.5;
+  }
+
+  /* GUARANTEE */
+  .guarantee-block {
+    display: flex; align-items: flex-start; gap: 1.5rem;
+    background: rgba(200,255,0,0.04);
+    border: 1px solid rgba(200,255,0,0.2);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .guarantee-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .guarantee-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .guarantee-text {
+    font-size: 0.9rem;
+    color: rgba(245,243,238,0.55);
+    line-height: 1.7;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 2.5rem 8rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+    color: rgba(245,243,238,0.5);
+    margin-bottom: 2.5rem;
+  }
+
+  /* CONTACT FORM */
+  .contact-form {
+    margin-top: 2rem;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: rgba(245,243,238,0.5);
+    text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group select {
+    background: #161616;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .form-group input::placeholder { color: rgba(245,243,238,0.25); }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: rgba(200,255,0,0.5);
+  }
+
+  .form-group select option { background: #161616; }
+
+  .contact-form .btn-primary {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1rem;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--accent); }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.25rem; }
+    .hero { padding: 8rem 1.25rem 4rem; }
+    section { padding: 4rem 1.25rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .guarantee-block { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Tangram<span>.</span></a>
+  <a href="#kontakt" class="nav-cta">Nezávazná konzultace</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">AI Automatizace pro podniky</div>
+  <h1>Získejte více času.<br>Uzavřete <em>více obchodů.</em></h1>
+  <p class="hero-sub">Implementujeme AI řešení, která automatizují opakující se procesy ve vašem podniku — od komunikace se zákazníky po generování obsahu.</p>
+  <div class="hero-actions">
+    <a href="#kontakt" class="btn-primary">Domluvit konzultaci</a>
+    <a href="#sluzby" class="btn-ghost">Co děláme →</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="sluzby">
+  <p class="section-label">Služby</p>
+  <h2>Co pro vás <em>automatizujeme</em></h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">💬</div>
+      <h3>AI chat na webu</h3>
+      <p>Chatbot, který odpovídá zákazníkům 24/7 — v češtině, na míru vašemu podniku.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📞</div>
+      <h3>AI recepční</h3>
+      <p>Virtuální recepční, která přijímá hovory, odpovídá na dotazy a rezervuje schůzky.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✍️</div>
+      <h3>Generace obsahu</h3>
+      <p>Automatické vytváření popisů, inzerátů a příspěvků na sociální sítě.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🖼️</div>
+      <h3>Úprava fotek pomocí AI</h3>
+      <p>Virtuální staging, úprava osvětlení a retušování nemovitostí bez fotografa.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROOF -->
+<section id="reference">
+  <p class="section-label">Reference</p>
+  <h2>Reálné výsledky<br>u <em>reálných klientů</em></h2>
+  <div class="proof-grid">
+    <div class="proof-card featured">
+      <p class="proof-label">Realizovaný projekt</p>
+      <h3>AI chat pro služby</h3>
+      <p>Implementovali jsme plně funkční AI chatbota pro existujícího klienta v oblasti služeb. Zákazníci získají odpovědi okamžitě — bez čekání na e-mail nebo hovor.</p>
+    </div>
+  </div>
+
+  <!-- TESTIMONIAL -->
+  <div class="testimonial-block">
+    <p class="testimonial-text testimonial-placeholder">Testimonial bude doplněn.</p>
+    <div class="testimonial-author">
+      <div class="author-avatar">K</div>
+      <div>
+        <p class="author-name">Majitel, vosik.cz</p>
+        <p class="author-role">Klient Tangramu</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATS -->
+<section id="statistiky">
+  <p class="section-label">Proč AI</p>
+  <h2>Čísla, která <em>mluví za vše</em></h2>
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number">3×</div>
+      <p class="stat-desc">rychlejší odpovědi zákazníkům díky AI chatu</p>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">40 %</div>
+      <p class="stat-desc">pracovního času tráví makléři administrativou</p>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">67 %</div>
+      <p class="stat-desc">firem plánuje implementovat AI do 2 let</p>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">24/7</div>
+      <p class="stat-desc">dostupnost bez nutnosti lidské obsluhy</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GUARANTEE -->
+<section>
+  <p class="section-label">Záruka</p>
+  <h2>Nic <em>neriskujete</em></h2>
+  <div class="guarantee-block">
+    <div class="guarantee-icon">🛡️</div>
+    <div>
+      <p class="guarantee-title">100% garance vrácení peněz</p>
+      <p class="guarantee-text">Pokud AI nebude správně odpovídat na otázky k vašemu podniku do 30 dní od spuštění, vrátíme vám celou částku. Bez otázek.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-section" id="kontakt">
+  <p class="section-label">Kontakt</p>
+  <h2>Začněme <em>spolu</em></h2>
+  <p>Nezávazná konzultace zdarma. Zjistíme, kde AI může vašemu podniku nejvíce pomoci.</p>
+  <form action="https://formspree.io/f/meevqyrg" method="POST" class="contact-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Jméno a příjmení</label>
+        <input type="text" id="name" name="name" placeholder="Jan Novák" required>
+      </div>
+      <div class="form-group">
+        <label for="contact">E-mail nebo telefon</label>
+        <input type="text" id="contact" name="contact" placeholder="jan@firma.cz" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="service">Co chcete automatizovat?</label>
+      <select id="service" name="service">
+        <option value="" disabled selected>Vyberte oblast</option>
+        <option value="AI chat na webu">AI chat na webu</option>
+        <option value="AI recepční / telefonní linka">AI recepční / telefonní linka</option>
+        <option value="Generace obsahu a popisů">Generace obsahu a popisů</option>
+        <option value="Úprava fotek pomocí AI">Úprava fotek pomocí AI</option>
+        <option value="Něco jiného">Něco jiného</option>
+      </select>
+    </div>
+    <button type="submit" class="btn-primary">Odeslat →</button>
+  </form>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">Tangram<span>.</span></p>
+  <p><a href="/cdn-cgi/l/email-protection#93f9f2f8e6f1bde0e7e1fcf1ffd3f4fef2faffbdf0fcfe" style="color: var(--gray); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 1px;"><span class="__cf_email__" data-cfemail="583239332d3a762b2c2a373a
