@@ -1,0 +1,43 @@
+# Tangram – AI Automation for Czech Businesses
+
+> Tangram implements AI automation solutions for small and medium businesses in the Czech Republic. We automate repetitive processes — from customer communication to content generation — so business owners can focus on growth.
+
+## What We Do
+
+Tangram builds and deploys four types of AI-powered tools:
+
+- **AI Website Chat** – A chatbot trained on your business data that answers customer questions 24/7 in Czech. No human needed.
+- **AI Receptionist** – A virtual receptionist that handles incoming phone calls, answers questions, and books appointments automatically.
+- **Content Generation** – Automated creation of product descriptions, property listings, ads, and social media posts.
+- **AI Photo Editing** – Virtual staging, lighting correction, and retouching for real estate and products — no photographer required.
+
+## Pricing
+
+Services start at **2 500 Kč**. Exact pricing depends on the solution and scope. A free, no-obligation consultation is available to determine the right fit.
+
+## What Clients Get
+
+- Customer responses up to **3× faster** compared to manual handling
+- **24/7 availability** — AI works around the clock without human staff
+- Instant answers for customers — no waiting for email or callbacks
+- Automated handling of repetitive queries, freeing up staff time
+- AI trained specifically on the client's own business data, in Czech
+- A dedicated solution deployed and configured for the client's use case
+
+## How Fast
+
+- Solutions are deployed within days of onboarding
+- AI is available 24/7 from day one — no ramp-up period
+- Customer queries are answered instantly, in real time
+
+## Guarantee
+
+**100% money-back guarantee**: if the AI does not answer customer questions correctly within 30 days of launch, the full amount is refunded — no questions asked.
+
+## Proven Results
+
+- **vosik.cz** (tool and equipment rental) – Tangram deployed a fully functional AI chatbot. Customers now get immediate answers without waiting for a phone call or email. Owner Vít Pomikálek: *"He trained a chatbot for us that now answers questions instead of us and saves time."*
+
+## Contact
+
+Free consultation available via the contact form on the website. No commitment required.
