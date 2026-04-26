@@ -311,6 +311,114 @@
     line-height: 1.6;
   }
 
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  .pricing-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(200,255,0,0.3);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+
+  .pricing-from {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 0.25rem;
+  }
+
+  .pricing-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .pricing-amount span {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: rgba(200,255,0,0.6);
+  }
+
+  .pricing-desc {
+    font-size: 0.9rem;
+    color: rgba(245,243,238,0.5);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .pricing-list li {
+    font-size: 0.9rem;
+    color: rgba(245,243,238,0.75);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .pricing-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .pricing-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .pricing-info-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .pricing-info-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pricing-info-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .pricing-info-text {
+    font-size: 0.825rem;
+    color: rgba(245,243,238,0.45);
+    line-height: 1.6;
+  }
+
   /* PROOF */
   .proof-grid {
     display: grid;
@@ -645,6 +753,51 @@
       <div class="service-icon">🖼️</div>
       <h3>Úprava fotek pomocí AI</h3>
       <p>Virtuální staging, úprava osvětlení a retušování nemovitostí bez fotografa.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section id="ceny">
+  <p class="section-label">Ceny</p>
+  <h2>Kolik to <em>stojí</em></h2>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <p class="pricing-from">Od</p>
+      <div class="pricing-amount">2 500 <span>Kč</span></div>
+      <p class="pricing-desc">Cena závisí na rozsahu a typu řešení. Každý projekt nastavíme přesně podle vašich potřeb.</p>
+      <ul class="pricing-list">
+        <li>AI chat na webu</li>
+        <li>AI recepční</li>
+        <li>Generace obsahu</li>
+        <li>Úprava fotek pomocí AI</li>
+      </ul>
+      <a href="#kontakt" class="btn-primary" style="display:inline-block;margin-top:2rem;">Zjistit cenu pro mě →</a>
+    </div>
+    <div class="pricing-info">
+      <div class="pricing-info-item">
+        <div class="pricing-info-icon">🛡️</div>
+        <div>
+          <p class="pricing-info-title">30denní garance vrácení peněz</p>
+          <p class="pricing-info-text">Pokud nebudete spokojeni, vrátíme vám celou částku.</p>
+        </div>
+      </div>
+      <div class="pricing-info-item">
+        <div class="pricing-info-icon">📞</div>
+        <div>
+          <p class="pricing-info-title">Nezávazná konzultace zdarma</p>
+          <p class="pricing-info-text">Nejdřív zjistíme, co vám AI ušetří — a pak teprve navrhneme cenu.</p>
+        </div>
+      </div>
+      <div class="pricing-info-item">
+        <div class="pricing-info-icon">⚡</div>
+        <div>
+          <p class="pricing-info-title">Spuštění během dnů</p>
+          <p class="pricing-info-text">Bez dlouhého čekání. AI začne pracovat za vás co nejdříve.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
